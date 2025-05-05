@@ -1,0 +1,20 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "enterprise-structure": {
+      "description": "Khởi tạo base folder structure cho Angular enterprise.",
+      "factory": "./enterprise-structure/index#enterpriseStructure",
+      "schema": "./enterprise-structure/schema.json"
+    },
+    "env-config": {
+      "description": "Tạo cấu hình môi trường và các script build.",
+      "factory": "./env-config/index#envConfig",
+      "schema": "./env-config/schema.json"
+    },
+    "auth-features": {
+      "description": "Tạo các thành phần xác thực: auth, guards, interceptors và tích hợp NGRX",
+      "factory": "./auth-features/index#authFeatures",
+      "schema": "./auth-features/schema.json"
+    }
+  }
+}

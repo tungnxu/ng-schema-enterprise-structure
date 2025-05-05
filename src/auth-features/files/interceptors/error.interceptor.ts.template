@@ -1,0 +1,34 @@
+import { Injectable } from '@angular/core';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
+
+@Injectable()
+export class ErrorInterceptor implements HttpInterceptor {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          // Auto logout nếu server trả về lỗi 401 Unauthorized
+          this.authService.logout();
+        }
+        
+        if (error.status === 403) {
+          // Chuyển hướng đến trang không có quyền truy cập
+          this.router.navigate(['/unauthorized']);
+        }
+        
+        // Kiểm tra lỗi server hoặc lỗi mạng
+        const errorMessage = error.error?.message || error.statusText || 'Unknown error';
+        console.error('API Error:', errorMessage, error);
+        
+        // Trả lại lỗi để component có thể xử lý
+        return throwError(() => error);
+      })
+    );
+  }
+}

@@ -1,0 +1,19 @@
+import { AuthEffects } from './auth.effects';
+import { AuthState, authReducer } from './auth.reducer';
+
+export * from './auth.actions';
+export * from './auth.reducer';
+export * from './auth.selectors';
+export * from './auth.effects';
+
+export interface State {
+  auth: AuthState;
+}
+
+export const reducers = {
+  auth: authReducer
+};
+
+export const effects = [
+  AuthEffects
+];

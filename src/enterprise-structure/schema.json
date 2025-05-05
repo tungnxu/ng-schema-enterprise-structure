@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SchematicsEnterpriseStructure",
+  "title": "Enterprise Structure Schema",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "Tên của project để tạo cấu trúc thư mục",
+      "$default": {
+        "$source": "projectName"
+      }
+    }
+  },
+  "required": []
+}
